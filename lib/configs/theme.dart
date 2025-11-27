@@ -5,6 +5,7 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     useMaterial3: true,
+    fontFamily: 'Geist',
     colorScheme: ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.secondary,
@@ -23,6 +24,7 @@ class AppTheme {
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
+    fontFamily: 'Geist',
     useMaterial3: true,
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
@@ -40,5 +42,5 @@ class AppTheme {
     ),
   );
 
-  static ThemeData getTheme(BuildContext context)=> Theme.of(context);
+  static ThemeData getTheme(BuildContext context) => Theme.of(context);
 }

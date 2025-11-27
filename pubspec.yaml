@@ -22,6 +22,9 @@ dependencies:
   shimmer: ^3.0.0
   flutter_dotenv: ^6.0.0
   equatable: ^2.0.7
+  grid_background: ^0.0.1
+  url_launcher: ^6.3.2
+  blur: ^4.0.2
 
 dev_dependencies:
   flutter_test:
