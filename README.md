@@ -1,7 +1,6 @@
 
 # 🏠 Dorm of Decents
-
-A comprehensive dorm management system built with Flutter and Dart. Track meals, expenses, settlements, and manage user activities in shared living spaces. Cross-platform support for Android, iOS, Windows, macOS, and Linux.
+"A comprehensive bachelors flat management application built with Flutter. Track meals, expenses, settlements, and manage user activities in shared living spaces. Cross-platform support for Android, iOS, Windows, macOS, and Linux.
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.16-blue)
 ![Dart](https://img.shields.io/badge/Dart-3.2-blue)
