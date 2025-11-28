@@ -2,6 +2,7 @@ import 'package:dorm_of_decents/configs/router.dart';
 import 'package:dorm_of_decents/configs/theme.dart';
 import 'package:dorm_of_decents/data/services/client/supabase_client.dart';
 import 'package:dorm_of_decents/logic/auth_cubit.dart';
+import 'package:dorm_of_decents/logic/dashboard_cubit.dart';
 import 'package:dorm_of_decents/logic/expense_cubit.dart';
 import 'package:dorm_of_decents/logic/login_cubit.dart';
 import 'package:dorm_of_decents/logic/meal_cubit.dart';
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider.value(value: _authCubit),
         BlocProvider(create: (_) => SplashCubit()..startSplash()),
         BlocProvider(create: (_) => LoginCubit()),
+        BlocProvider(create: (_) => DashboardCubit()),
         BlocProvider(create: (_) => MealCubit()),
         BlocProvider(create: (_) => ExpenseCubit()),
         BlocProvider(create: (_) => SettlementCubit()),
