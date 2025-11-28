@@ -57,6 +57,7 @@ class UsersPage extends StatelessWidget {
                             horizontal: 24,
                             vertical: 10,
                           ),
+                          physics: BouncingScrollPhysics(),
                           itemCount: state.users.length,
                           separatorBuilder: (_, __) =>
                               const SizedBox(height: 12),

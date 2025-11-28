@@ -65,6 +65,7 @@ class SettlementsPage extends StatelessWidget {
                             .refreshSettlementData();
                       },
                       child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 10,

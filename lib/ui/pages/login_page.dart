@@ -9,6 +9,7 @@ import 'package:dorm_of_decents/ui/widgets/custom_textfield.dart';
 import 'package:dorm_of_decents/utils/sizing.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grid_background/grid_background.dart';
@@ -22,6 +23,19 @@ class LoginPage extends StatelessWidget {
     final theme = AppTheme.getTheme(context);
     final windowSize = Sizing.windowSize(context);
     final loginCubit = context.read<LoginCubit>();
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: theme.scaffoldBackgroundColor,
+        statusBarIconBrightness: theme.brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
+        systemNavigationBarColor: theme.colorScheme.surface,
+        systemNavigationBarIconBrightness: theme.brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
+      ),
+    );
 
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
