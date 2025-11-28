@@ -3,6 +3,7 @@ import 'package:dorm_of_decents/configs/theme.dart';
 import 'package:dorm_of_decents/data/services/client/dio_client.dart';
 import 'package:dorm_of_decents/logic/auth_cubit.dart';
 import 'package:dorm_of_decents/logic/login_cubit.dart';
+import 'package:dorm_of_decents/logic/meal_cubit.dart';
 import 'package:dorm_of_decents/logic/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider.value(value: _authCubit),
         BlocProvider(create: (_) => SplashCubit()..startSplash()),
         BlocProvider(create: (_) => LoginCubit()),
+        BlocProvider(create: (_) => MealCubit()),
       ],
       child: MaterialApp.router(
         title: "Dorm of Decents",
