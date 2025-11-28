@@ -1,35 +1,12 @@
 import 'package:dorm_of_decents/configs/theme.dart';
-import 'package:dorm_of_decents/data/services/storage/user_storage.dart';
 import 'package:dorm_of_decents/logic/dashboard_cubit.dart';
 import 'package:dorm_of_decents/ui/widgets/meals_page_shimmer.dart';
 import 'package:dorm_of_decents/utils/datetime_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DashboardPage extends StatefulWidget {
+class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
-
-  @override
-  State<DashboardPage> createState() => _DashboardPageState();
-}
-
-class _DashboardPageState extends State<DashboardPage> {
-  String userName = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadUserName();
-  }
-
-  Future<void> _loadUserName() async {
-    final userData = await UserStorage.getUserData();
-    if (userData != null && mounted) {
-      setState(() {
-        userName = userData.name;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
               return Center(child: Text(state.message));
             } else if (state is DashboardLoaded) {
               final data = state.dashboardResponse;
+              final userName = state.userName;
 
               return RefreshIndicator(
                 onRefresh: () async {

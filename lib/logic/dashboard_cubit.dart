@@ -1,5 +1,4 @@
 import 'package:dorm_of_decents/data/models/dashboard_response.dart';
-import 'package:dorm_of_decents/data/models/expense_response.dart';
 import 'package:dorm_of_decents/data/services/api/dashboard.dart';
 import 'package:dorm_of_decents/data/services/storage/user_storage.dart';
 import 'package:equatable/equatable.dart';
@@ -27,11 +26,12 @@ class DashboardEmpty extends DashboardState {
 
 class DashboardLoaded extends DashboardState {
   final DashboardResponse dashboardResponse;
+  final String userName;
 
-  const DashboardLoaded({required this.dashboardResponse});
+  const DashboardLoaded({required this.dashboardResponse, this.userName = ''});
 
   @override
-  List<Object?> get props => [dashboardResponse];
+  List<Object?> get props => [dashboardResponse, userName];
 }
 
 class DashboardError extends DashboardState {
@@ -47,10 +47,17 @@ class DashboardCubit extends Cubit<DashboardState> {
   DashboardCubit() : super(DashboardInitial());
 
   final DashboardApi _dashboardApi = DashboardApi();
+  String _userName = '';
 
   Future<void> fetchDashboardData() async {
     try {
       emit(DashboardLoading());
+
+      // Fetch user name only once if not already fetched
+      if (_userName.isEmpty) {
+        final userData = await UserStorage.getUserData();
+        _userName = userData?.name ?? '';
+      }
 
       final dashboardResponse = await _dashboardApi.fetchDashboardData();
 
@@ -59,7 +66,12 @@ class DashboardCubit extends Cubit<DashboardState> {
         return;
       }
 
-      emit(DashboardLoaded(dashboardResponse: dashboardResponse));
+      emit(
+        DashboardLoaded(
+          dashboardResponse: dashboardResponse,
+          userName: _userName,
+        ),
+      );
     } catch (e) {
       emit(DashboardError(e.toString()));
     }
