@@ -2,8 +2,13 @@ import 'dart:async';
 
 import 'package:dorm_of_decents/configs/routes.dart';
 import 'package:dorm_of_decents/logic/auth_cubit.dart';
+import 'package:dorm_of_decents/ui/pages/account_page.dart';
 import 'package:dorm_of_decents/ui/pages/dashboard_wrapper.dart';
+import 'package:dorm_of_decents/ui/pages/expenses_page.dart';
+import 'package:dorm_of_decents/ui/pages/home_page.dart';
 import 'package:dorm_of_decents/ui/pages/login_page.dart';
+import 'package:dorm_of_decents/ui/pages/meals_page.dart';
+import 'package:dorm_of_decents/ui/pages/settlements_page.dart';
 import 'package:dorm_of_decents/ui/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -17,20 +22,20 @@ GoRouter createRouter(AuthCubit authCubit) {
       final isAuthenticated = authState is AuthAuthenticated;
       final isSplash = state.matchedLocation == AppRoutes.splash;
       final isLogin = state.matchedLocation == AppRoutes.login;
-      final isDashboard = state.matchedLocation == AppRoutes.dashboard;
+      final isDashboardRoute = state.matchedLocation.startsWith('/dashboard');
 
       // Skip redirect logic during splash
       if (isSplash) {
         return null;
       }
 
-      // If authenticated and trying to access login, redirect to dashboard
+      // If authenticated and trying to access login, redirect to dashboard home
       if (isAuthenticated && isLogin) {
-        return AppRoutes.dashboard;
+        return AppRoutes.home;
       }
 
       // If not authenticated and trying to access protected routes, redirect to login
-      if (!isAuthenticated && isDashboard) {
+      if (!isAuthenticated && isDashboardRoute) {
         return AppRoutes.login;
       }
 
@@ -49,13 +54,39 @@ GoRouter createRouter(AuthCubit authCubit) {
         builder: (context, state) => const LoginPage(),
       ),
 
-      // Dashboard
-      GoRoute(
-        path: AppRoutes.dashboard,
-        builder: (context, state) => const DashboardWrapper(),
+      // Dashboard with nested routes
+      ShellRoute(
+        builder: (context, state, child) {
+          return DashboardWrapper(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: AppRoutes.home,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: HomePage()),
+          ),
+          GoRoute(
+            path: AppRoutes.meals,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: MealsPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.expenses,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ExpensesPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.settlements,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: SettlementsPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.account,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: AccountPage()),
+          ),
+        ],
       ),
-
-      
     ],
   );
 }

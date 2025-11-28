@@ -39,8 +39,8 @@ class _SplashPageState extends State<SplashPage> {
             if (state is SplashFinished) {
               final authState = context.read<AuthCubit>().state;
               if (authState is AuthAuthenticated) {
-                // navigate to dashboard
-                context.pushReplacement(AppRoutes.dashboard);
+                // navigate to home page
+                context.pushReplacement(AppRoutes.home);
               } else {
                 // navigate to login
                 context.pushReplacement(AppRoutes.login);

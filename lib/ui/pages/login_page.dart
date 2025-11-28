@@ -62,7 +62,7 @@ class LoginPage extends StatelessWidget {
             refreshToken: response.refreshToken,
           );
 
-          context.pushReplacement(AppRoutes.dashboard);
+          context.pushReplacement(AppRoutes.home);
         }
       },
       child: Scaffold(
