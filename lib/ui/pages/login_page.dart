@@ -92,7 +92,8 @@ class LoginPage extends StatelessWidget {
                         color: theme.colorScheme.primary.withAlpha(30),
                       ),
                     ),
-                    child: Padding(
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
                       padding: const EdgeInsets.all(25),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
