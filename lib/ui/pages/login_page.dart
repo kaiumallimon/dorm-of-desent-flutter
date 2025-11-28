@@ -7,7 +7,6 @@ import 'package:dorm_of_decents/ui/widgets/app_logo.dart';
 import 'package:dorm_of_decents/ui/widgets/custom_button.dart';
 import 'package:dorm_of_decents/ui/widgets/custom_textfield.dart';
 import 'package:dorm_of_decents/utils/sizing.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,8 +26,20 @@ class LoginPage extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
+          // Clean up error message by removing "Exception: " prefix
+          String errorMessage = state.error;
+          if (errorMessage.startsWith('Exception: ')) {
+            errorMessage = errorMessage.substring(11);
+          }
+
           toastification.show(
             context: context,
+            autoCloseDuration: const Duration(seconds: 4),
+            icon: Icon(
+              Icons.error_outline,
+              color: theme.colorScheme.error,
+              size: 20,
+            ),
             title: Text(
               "Login Failed",
               style: theme.textTheme.titleMedium?.copyWith(
@@ -36,7 +47,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             description: Text(
-              state.error,
+              errorMessage,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onError,
               ),
@@ -48,18 +59,6 @@ class LoginPage extends StatelessWidget {
           apiClient.setTokens(
             accessToken: response.accessToken,
             refreshToken: response.refreshToken,
-          );
-
-          toastification.show(
-            context: context,
-            style: ToastificationStyle.fillColored,
-            backgroundColor: CupertinoColors.activeGreen,
-            title: Text(
-              "Login Successful",
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onPrimary,
-              ),
-            ),
           );
 
           context.pushReplacement(AppRoutes.dashboard);
