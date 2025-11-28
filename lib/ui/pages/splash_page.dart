@@ -17,51 +17,48 @@ class SplashPage extends StatelessWidget {
     // size of the current window
     final windowSize = Sizing.windowSize(context);
 
-    return BlocProvider(
-      create: (context) => SplashCubit()..startSplash(),
-      child: BlocListener<SplashCubit, SplashState>(
-        listener: (context, state) {
-          // check if splash screen has finished & 
-          // navigate accordingly
-          if (state is SplashFinished) {
-            if (state.isLoggedIn) {
-              // navigate to dashboard
-              context.pushReplacement(AppRoutes.dashboard);
-            } else {
-              // navigate to login
-              context.pushReplacement(AppRoutes.login);
-            }
+    return BlocListener<SplashCubit, SplashState>(
+      listener: (context, state) {
+        // check if splash screen has finished & 
+        // navigate accordingly
+        if (state is SplashFinished) {
+          if (state.isLoggedIn) {
+            // navigate to dashboard
+            context.pushReplacement(AppRoutes.dashboard);
+          } else {
+            // navigate to login
+            context.pushReplacement(AppRoutes.login);
           }
-        },
-        child: Scaffold(
-          backgroundColor: AppTheme.getTheme(context).scaffoldBackgroundColor,
-          body: SafeArea(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Center(
-                  child: Container(
-                    width: windowSize.width * 0.25,
-                    height: windowSize.width * 0.25,
-                    padding: EdgeInsets.all(windowSize.width * 0.05),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: AppColors.primary.withAlpha(75),
-                      ),
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppTheme.getTheme(context).scaffoldBackgroundColor,
+        body: SafeArea(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Center(
+                child: Container(
+                  width: windowSize.width * 0.25,
+                  height: windowSize.width * 0.25,
+                  padding: EdgeInsets.all(windowSize.width * 0.05),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.primary.withAlpha(75),
                     ),
-                    child: Image.asset(AppAssets.appLogo, fit: BoxFit.contain),
                   ),
+                  child: Image.asset(AppAssets.appLogo, fit: BoxFit.contain),
                 ),
-
-                Positioned(
-                  bottom: windowSize.height * 0.08,
-                  left: 0,
-                  right: 0,
-                  child: LoadingAnimation(),
-                ),
-              ],
-            ),
+              ),
+    
+              Positioned(
+                bottom: windowSize.height * 0.08,
+                left: 0,
+                right: 0,
+                child: LoadingAnimation(),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,5 +1,8 @@
 import 'package:dorm_of_decents/data/models/login_response.dart';
+import 'package:dorm_of_decents/data/services/api/login.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class LoginState extends Equatable {
   @override
@@ -18,7 +21,7 @@ class LoginLoading extends LoginState {
 
 class LoginSuccess extends LoginState {
   final LoginResponse loginResponse;
-  
+
   LoginSuccess({required this.loginResponse});
 
   @override
@@ -34,5 +37,40 @@ class LoginFailure extends LoginState {
   List<Object?> get props => [error];
 }
 
-
 // Login cubit
+class LoginCubit extends Cubit<LoginState> {
+  LoginCubit() : super(LoginInitial()) {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
+
+  Future<void> login({required String email, required String password}) async {
+    // emit loading state
+    emit(LoginLoading());
+
+    try {
+      final response = await LoginApi.login(email: email, password: password);
+
+      // Clear controllers on successful login
+      emailController.clear();
+      passwordController.clear();
+
+      // emit success state
+      emit(LoginSuccess(loginResponse: response));
+    } catch (e) {
+      // emit failure state
+      emit(LoginFailure(error: e.toString()));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    // dispose controllers automatically
+    emailController.dispose();
+    passwordController.dispose();
+    return super.close();
+  }
+}

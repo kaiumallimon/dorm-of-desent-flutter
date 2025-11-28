@@ -1,7 +1,10 @@
 import 'package:dorm_of_decents/configs/router.dart';
 import 'package:dorm_of_decents/configs/theme.dart';
 import 'package:dorm_of_decents/data/services/client/dio_client.dart';
+import 'package:dorm_of_decents/logic/login_cubit.dart';
+import 'package:dorm_of_decents/logic/splash_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
@@ -24,12 +27,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: "Dorm of Decents",
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      routerConfig: router,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => SplashCubit()..startSplash()),
+        BlocProvider(create: (_) => LoginCubit()),
+      ],
+      child: MaterialApp.router(
+        title: "Dorm of Decents",
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        routerConfig: router,
+      ),
     );
   }
 }
