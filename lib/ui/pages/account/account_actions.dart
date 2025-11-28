@@ -49,6 +49,7 @@ class AccountActions extends StatelessWidget {
                         variant: ButtonVariant.ghost,
                         onPressed: () => Navigator.pop(context, false),
                       ),
+                      const SizedBox(height: 12),
                       CustomButton(
                         label: 'Logout',
                         variant: ButtonVariant.destructive,

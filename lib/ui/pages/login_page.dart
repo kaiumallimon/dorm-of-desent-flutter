@@ -121,7 +121,27 @@ class LoginPage extends StatelessWidget {
                             isBordered: false,
                             obscureText: true,
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: .end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  loginCubit.openUrl(
+                                    'https://dorm-of-decent.vercel.app/forgot-password',
+                                  );
+                                },
+                                child: Text(
+                                  AppConstants.forgotPassword,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: theme.colorScheme.error,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
                           BlocBuilder<LoginCubit, LoginState>(
                             builder: (context, state) {
                               final isLoading = state is LoginLoading;
@@ -227,7 +247,11 @@ class LoginPage extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                     recognizer: TapGestureRecognizer()
-                                      ..onTap = () {},
+                                      ..onTap = () async {
+                                        await loginCubit.openUrl(
+                                          'https://wa.me/+8801738439423',
+                                        );
+                                      },
                                   ),
                                 ),
                                 Text(
