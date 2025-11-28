@@ -36,6 +36,7 @@ class DashboardPage extends StatelessWidget {
                   await context.read<DashboardCubit>().refreshDashboardData();
                 },
                 child: CustomScrollView(
+                  physics: BouncingScrollPhysics(),
                   slivers: [
                     SliverAppBar(
                       expandedHeight: 90,
