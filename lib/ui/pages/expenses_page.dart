@@ -101,6 +101,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                         await context.read<ExpenseCubit>().refreshExpenses();
                       },
                       child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 10,

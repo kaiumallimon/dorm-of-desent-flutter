@@ -70,6 +70,7 @@ class _MealsPageState extends State<MealsPage> {
                         await context.read<MealCubit>().refreshMeals();
                       },
                       child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 10,

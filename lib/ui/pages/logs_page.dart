@@ -55,6 +55,7 @@ class LogsPage extends StatelessWidget {
                           await context.read<LogsCubit>().fetchLogs();
                         },
                         child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 24,
                             vertical: 10,

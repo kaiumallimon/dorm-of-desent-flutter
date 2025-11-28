@@ -8,6 +8,7 @@ import 'package:dorm_of_decents/logic/splash_cubit.dart';
 import 'package:dorm_of_decents/ui/widgets/loading_animation.dart';
 import 'package:dorm_of_decents/utils/sizing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,6 +31,21 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     // size of the current window
     final windowSize = Sizing.windowSize(context);
+
+    final theme = AppTheme.getTheme(context);
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: theme.scaffoldBackgroundColor,
+        statusBarIconBrightness: theme.brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
+        systemNavigationBarColor: theme.colorScheme.surface,
+        systemNavigationBarIconBrightness: theme.brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
+      ),
+    );
 
     return MultiBlocListener(
       listeners: [
